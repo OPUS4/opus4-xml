@@ -1,0 +1,51 @@
+{
+  "name": "opus4-repo/opus4-xml",
+  "description": "OPUS 4 XML Library",
+  "license": "GPL-2.0+",
+  "type": "library",
+  "keywords": [
+    "opus4",
+    "import"
+  ],
+  "homepage": "https://www.opus-repository.org",
+  "require": {
+    "ext-dom": "*",
+    "ext-libxml": "*",
+    "opus4-repo/opus4-common": "dev-commonModel"
+  },
+  "require-dev": {
+    "opus4-repo/framework": "dev-commonModel",
+    "phpunit/phpunit": "6.*",
+    "laminas/laminas-coding-standard": "<2.3",
+    "phpmetrics/phpmetrics": "2.7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Opus\\Xml\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "OpusTest\\Xml\\": "test/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "check": [
+      "@cs-check",
+      "@test"
+    ],
+    "check-full": [
+      "@prepare",
+      "@cs-report",
+      "@test-coverage"
+    ],
+    "prepare": "mkdir -p build",
+    "test": "phpunit --colors=always --log-junit build/phpunit.xml",
+    "test-coverage": "phpunit --log-junit build/phpunit.xml --colors=always --coverage-html build/coverage/ --coverage-clover build/coverage/clover.xml",
+    "cs-check": "phpcs -n",
+    "cs-report": "phpcs -n --report=checkstyle --report-file=build/checkstyle.xml",
+    "cs-fix": "phpcbf"
+  }
+}
