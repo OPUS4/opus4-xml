@@ -11,13 +11,18 @@
   "require": {
     "ext-dom": "*",
     "ext-libxml": "*",
-    "opus4-repo/opus4-common": "dev-commonModel"
+    "opus4-repo/opus4-common": "4.7.2.*"
   },
   "require-dev": {
-    "opus4-repo/framework": "dev-commonModel",
-    "phpunit/phpunit": "6.*",
-    "laminas/laminas-coding-standard": "<2.3",
+    "opus4-repo/framework": "4.7.2.*",
+    "phpunit/phpunit": "<9",
+    "opus4-repo/codesniffer": "dev-laminas",
     "phpmetrics/phpmetrics": "2.7.4"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   },
   "autoload": {
     "psr-4": {

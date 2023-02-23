@@ -1,0 +1,50 @@
+name: PHP Composer
+
+on:
+  push:
+
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        php-versions: ['7.1', '8.1']
+
+    name: PHP ${{ matrix.php-versions }} Test
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP ${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+
+      - name: Check PHP Version
+        run: php -v
+
+      - name: Install Composer and Dependencies
+        run: curl -s http://getcomposer.org/installer | php && php composer.phar self-update && php composer.phar install
+
+      - name: Check files
+        run: ant lint
+
+      - name: Start MySQL
+        run: sudo systemctl start mysql.service
+
+      - name: Prepare workspace
+        run: ant prepare-workspace
+
+      - name: Prepare database
+        run: bash vendor/bin/opus4db --adminpwd root --userpwd root --sqlpwd root
+
+      - name: Tests
+        run: php composer.phar test
+
+      - name: Coding Style
+        run: php composer.phar cs-check
